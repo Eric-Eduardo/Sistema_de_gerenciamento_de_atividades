@@ -13,7 +13,8 @@ public class MainView implements View{
         navigation = new ArrayList<>();
         ActivityInsertionFormView insertionForm = new ActivityInsertionFormView();
 
-        navigation.add(insertionForm);
+        navigation.add(new ActivityInsertionFormView());
+        navigation.add(new ActivitySearchView());
     }
     
     @Override
@@ -24,10 +25,8 @@ public class MainView implements View{
         while (!quit) {
             System.out.println("\nMENU PRINCIPAL");
 
-            for (int i = 0; i < navigation.size(); i++) {
-                System.out.printf("[%d] Criar Nova Tarefa\n", i+1);
-            }
-
+            System.out.println("[1] Criar Nova Tarefa");
+            System.out.println("[2] Buscar tarefa");
             System.out.println("[0] Sair");
 
 
