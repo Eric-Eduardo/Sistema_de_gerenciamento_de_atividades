@@ -1,4 +1,4 @@
-package view;
+package database;
 
 import java.util.Map;
 

@@ -24,12 +24,12 @@ public class ActivitySearchView implements View {
                 if (option == 0) {
                     quit = true;
                 } else if (option ==  1) {
-                    // List<Activity> activities = new ArrayList<>();
-                    // activities.add(new Activity("Atividade 1", new Date("12/06/2024"), new Date("12/06/2024")));
-                    // activities.add(new Activity("Atividade 2", new Date("13/06/2024"), new Date("15/06/2024")));
-                    // activities.add(new Activity("Atividade 3", new Date("14/06/2024"), new Date("16/06/2024")));
-                    // activities.add(new Activity("Atividade 4", new Date("15/06/2024"), new Date("17/06/2024")));
-                    List<Activity> activities = ActivityService.findAll();
+                    List<Activity> activities = new ArrayList<>();
+                    activities.add(new Activity("Atividade 1", new Date("12/06/2024"), new Date("12/06/2024")));
+                    activities.add(new Activity("Atividade 2", new Date("13/06/2024"), new Date("15/06/2024")));
+                    activities.add(new Activity("Atividade 3", new Date("14/06/2024"), new Date("16/06/2024")));
+                    activities.add(new Activity("Atividade 4", new Date("15/06/2024"), new Date("17/06/2024")));
+                    // List<Activity> activities = activityService.findAll();
 
                     TableDataView<Activity> table = new TableDataView<>();
                     table.addColumn("Título");
