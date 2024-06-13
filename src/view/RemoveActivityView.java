@@ -1,8 +1,10 @@
 package view;
 
+import service.ActivityService;
 import java.util.Scanner;
 
 public class RemoveActivityView implements View {
+    private ActivityService activityService = new ActivityService();
 
     @Override
     public void startView() {
@@ -23,7 +25,7 @@ public class RemoveActivityView implements View {
                     continue;
                 }
 
-                ActivityService.delete(activityName);
+                activityService.delete(activityName);
 
                 quit = true;
 

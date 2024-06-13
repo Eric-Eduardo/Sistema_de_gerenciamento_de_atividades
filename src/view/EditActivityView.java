@@ -1,11 +1,12 @@
 package view;
 
+import service.ActivityService;
 import entity.Activity;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import javax.xml.crypto.NoSuchMechanismException;
 
 public class EditActivityView implements View {
+    private ActivityService activityService = new ActivityService();
 
     @Override
     public void startView() {
@@ -28,7 +29,7 @@ public class EditActivityView implements View {
                     continue;
                 }
 
-                idEntity = ActivityService.getIdByName(activityName);
+                idEntity = activityService.getIdByName(activityName);
 
                 quit = true;
 
@@ -64,30 +65,30 @@ public class EditActivityView implements View {
                             break;
                         case 1:
                             text = value.nextLine();
-                            ActivityService.updateTitle(idEntity, text);
+                            activityService.updateTitle(idEntity, text);
                             break;
                         case 2:
                             text = value.nextLine();
-                            ActivityService.updateStartDate(idEntity, text);
+                            activityService.updateStartDate(idEntity, text);
                             break;
                         case 3:
                             text = value.nextLine();
-                            ActivityService.updateEndDate(idEntity, text);
+                            activityService.updateEndDate(idEntity, text);
                             break;
                         case 4:
                             text = value.nextLine();
-                            ActivityService.addCategory(idEntity, text);
+                            activityService.addCategory(idEntity, text);
                             break;
                         case 5:
                             text = value.nextLine();
-                            ActivityService.removeCategory(idEntity, text);
+                            activityService.removeCategory(idEntity, text);
                             break;
                         default:
                             System.out.println("Opção inválida");
                     }
 
                     if (!quit) System.out.println("Dados atualizados!");
-                    
+
                 } catch (InputMismatchException e) {
                     System.out.println("Você deve digiar um número correspondente a uma opção.");
                 }

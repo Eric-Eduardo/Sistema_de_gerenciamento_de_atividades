@@ -1,5 +1,6 @@
 package view;
 
+import service.ActivityService;
 import entity.Activity;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +10,10 @@ import java.util.Scanner;
 
 
 public class ActivitySearchView implements View {
+
+    private ActivityService activityService = new ActivityService();
     
+    @Override
     public void startView() {
         boolean quit = false;
         Scanner scanner = new Scanner(System.in);
