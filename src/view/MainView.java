@@ -11,10 +11,11 @@ public class MainView implements View{
 
     public MainView() {
         navigation = new ArrayList<>();
-        ActivityInsertionFormView insertionForm = new ActivityInsertionFormView();
 
         navigation.add(new ActivityInsertionFormView());
         navigation.add(new ActivitySearchView());
+        navigation.add(new EditActivityView());
+        navigation.add(new RemoveActivityView());
     }
     
     @Override
@@ -27,6 +28,8 @@ public class MainView implements View{
 
             System.out.println("[1] Criar Nova Tarefa");
             System.out.println("[2] Buscar tarefa");
+            System.out.println("[3] Editar tarefa");
+            System.out.println("[4] Remover tarefa");
             System.out.println("[0] Sair");
 
 
@@ -38,8 +41,10 @@ public class MainView implements View{
                 } else {
                     navigation.get(option-1).startView();
                 }
-            } catch (InputMismatchException | IndexOutOfBoundsException e) {
-                System.out.println("\rOpção incorreta!");
+            } catch (InputMismatchException e) {
+                System.out.println("Você deve digiar um número correspondente a uma opção.");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Opção não encontrada.");
             }
         }
         scanner.close();
