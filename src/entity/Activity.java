@@ -27,7 +27,7 @@ public class Activity extends Entity {
         this.endTime = endTime;
     }
 
-    @Override 
+    
     public Map<String, String> conversionTableColumns() {
         Map<String, String> mapa = new LinkedHashMap<>();
         mapa.put("Título", title);

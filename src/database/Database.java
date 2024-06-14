@@ -6,6 +6,18 @@ import java.util.Map;
 import entity.Entity;
 
 public class Database {
+    // ------------------ Singleton -----------------------
+    private static Database instance;
+    private Database(){}
+
+    public Database getInstance(){
+        if(instance == null){
+            instance = new Database();
+        }
+        return instance;
+    }
+    // ------------------ Singleton -----------------------
+
     private Map<Class<? extends Entity>, DatabaseTableI<? extends Entity>> tables = new HashMap<>();
 
     public <T extends Entity> void delete(Class<T> clazz, int id){

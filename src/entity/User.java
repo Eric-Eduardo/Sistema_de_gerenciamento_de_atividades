@@ -1,6 +1,6 @@
 package entity;
 
-public class User {
+public class User extends Entity{
     private String login;
     private String senha;
 

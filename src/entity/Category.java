@@ -1,6 +1,6 @@
 package entity;
 
-public class Category {
+public class Category extends Entity{
     private String nome;
 
     public String getNome() {
