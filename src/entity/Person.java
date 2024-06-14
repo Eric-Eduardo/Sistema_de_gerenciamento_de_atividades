@@ -1,6 +1,6 @@
 package entity;
 
-public class Person {
+public class Person extends User {
     private String cpf;
     private String nome;
 

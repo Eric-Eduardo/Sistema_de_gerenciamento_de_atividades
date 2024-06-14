@@ -8,7 +8,7 @@ import java.util.Map;
 
 import database.TableDataI;
 
-public class Activity implements TableDataI{
+public class Activity extends Entity {
     private Long clienteDaTarefaId;
     private String title;
     private Date startTime;

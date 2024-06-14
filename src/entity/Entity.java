@@ -19,4 +19,9 @@ public class Entity {
     public Boolean getAtivo() {
         return ativo;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        return super.equals(object);
+    }
 }
