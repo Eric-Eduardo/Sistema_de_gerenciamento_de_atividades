@@ -1,6 +1,8 @@
  package view;
 
 import java.util.Scanner;
+
+import entity.CategoryEnum;
 import service.ActivityService;
 
 public class ActivityInsertionFormView implements View {
@@ -22,13 +24,19 @@ public class ActivityInsertionFormView implements View {
             System.out.print("Data final (no formato dd/MM/aaaa hh:mm): ");
             String endDate = scanner.nextLine();
 
-            System.out.print("Categoria: ");
-            String category = scanner.nextLine();
+            System.out.println("Categoria: ");
+            for (int i = 0; i < CategoryEnum.values().length; i++) {
+                System.out.println("["+i+"] "+CategoryEnum.values()[i]);                 
+            }
 
-            activityService.save(title, startDate, endDate, category);
+            int categoryEnum = scanner.nextInt();
+
+            activityService.save(title, startDate, endDate, categoryEnum);
 
         } catch (Exception e) {
             System.out.println(e);
         }
+        
+        scanner.close();
     }
  }

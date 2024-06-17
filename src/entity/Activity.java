@@ -11,7 +11,7 @@ public class Activity extends Entity {
     private String title;
     private Date startTime;
     private Date endTime;
-    private List<Category> categories;
+    private List<CategoryEnum> categories;
 
     
 
@@ -34,7 +34,7 @@ public class Activity extends Entity {
         return mapa;
     }
 
-    public void addCategory(Category category) {
+    public void addCategory(CategoryEnum category) {
         categories.add(category);
     }
 
@@ -56,10 +56,10 @@ public class Activity extends Entity {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
-    public List<Category> getCategories() {
+    public List<CategoryEnum> getCategories() {
         return categories;
     }
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<CategoryEnum> categories) {
         this.categories = categories;
     }
 }
