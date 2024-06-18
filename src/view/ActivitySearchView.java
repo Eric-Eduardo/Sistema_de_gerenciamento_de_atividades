@@ -1,17 +1,18 @@
 package view;
 
-import service.ActivityService;
+// import service.ActivityService;
 import entity.Activity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import service.TableDataService;
 
 
 public class ActivitySearchView implements View {
 
-    private ActivityService activityService = new ActivityService();
+    // private ActivityService activityService = new ActivityService();
     
     @Override
     public void startView() {
@@ -35,14 +36,10 @@ public class ActivitySearchView implements View {
                     activities.add(new Activity("Atividade 4", new Date("15/06/2024"), new Date("17/06/2024")));
                     // List<Activity> activities = activityService.findAll();
 
-                    TableDataView<Activity> table = new TableDataView<>();
-                    table.addColumn("Título");
-                    table.addColumn("Data inicial");
-                    table.addColumn("Data final");
-
+                    TableDataService table = new TableDataService();
                     table.addData(activities);
-
                     table.startView();
+                    
                 } else {
                     System.out.println("Opção inesistente");
                 }

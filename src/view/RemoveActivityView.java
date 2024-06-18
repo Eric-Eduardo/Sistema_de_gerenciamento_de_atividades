@@ -1,10 +1,10 @@
 package view;
 
-import service.ActivityService;
+// import service.ActivityService;
 import java.util.Scanner;
 
 public class RemoveActivityView implements View {
-    private ActivityService activityService = new ActivityService();
+    // private ActivityService activityService = new ActivityService();
 
     @Override
     public void startView() {
@@ -25,14 +25,14 @@ public class RemoveActivityView implements View {
                     continue;
                 }
 
-                activityService.delete(activityName);
+                // activityService.delete(activityName);
 
                 quit = true;
 
-            } catch (EntityNotFoundExceptioin e) {
-                System.out.println("Atividade não encontrada");
-            } catch (DatabaseException e) {
-                System.out.println("Ocorreu algum erro no banco de dados!");
+            // } catch (EntityNotFoundExceptioin e) {
+            //     System.out.println("Atividade não encontrada");
+            // } catch (DatabaseException e) {
+            //     System.out.println("Ocorreu algum erro no banco de dados!");
             } catch (Exception e) {
                 System.out.println("Erro");
             }

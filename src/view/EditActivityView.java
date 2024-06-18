@@ -1,12 +1,11 @@
 package view;
 
-import service.ActivityService;
-import entity.Activity;
+// import service.ActivityService;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class EditActivityView implements View {
-    private ActivityService activityService = new ActivityService();
+    // private ActivityService activityService = new ActivityService();
 
     @Override
     public void startView() {
@@ -29,14 +28,14 @@ public class EditActivityView implements View {
                     continue;
                 }
 
-                idEntity = activityService.getIdByName(activityName);
+                // idEntity = activityService.getIdByName(activityName);
 
                 quit = true;
 
-            } catch (EntityNotFoundExceptioin e) {
-                System.out.println("Atividade não encontrada");
-            } catch (DatabaseException e) {
-                System.out.println("Ocorreu algum erro no banco de dados!");
+            // } catch (EntityNotFoundExceptioin e) {
+            //     System.out.println("Atividade não encontrada");
+            // } catch (DatabaseException e) {
+            //     System.out.println("Ocorreu algum erro no banco de dados!");
             } catch (Exception e) {
                 System.out.println("Erro");
             }
@@ -65,23 +64,23 @@ public class EditActivityView implements View {
                             break;
                         case 1:
                             text = value.nextLine();
-                            activityService.updateTitle(idEntity, text);
+                            // activityService.updateTitle(idEntity, text);
                             break;
                         case 2:
                             text = value.nextLine();
-                            activityService.updateStartDate(idEntity, text);
+                            // activityService.updateStartDate(idEntity, text);
                             break;
                         case 3:
                             text = value.nextLine();
-                            activityService.updateEndDate(idEntity, text);
+                            // activityService.updateEndDate(idEntity, text);
                             break;
                         case 4:
                             text = value.nextLine();
-                            activityService.addCategory(idEntity, text);
+                            // activityService.addCategory(idEntity, text);
                             break;
                         case 5:
                             text = value.nextLine();
-                            activityService.removeCategory(idEntity, text);
+                            // activityService.removeCategory(idEntity, text);
                             break;
                         default:
                             System.out.println("Opção inválida");
