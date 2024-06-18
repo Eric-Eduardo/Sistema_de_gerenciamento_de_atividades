@@ -11,9 +11,9 @@ public class ActivityInsertionFormView implements View {
     @Override
     public void startView() {
         
-        Scanner scanner = new Scanner(System.in);
         System.out.println("FORMULÁRIO DE CADASTRO DE ATIVIDADE");
-        
+        Scanner scanner = new Scanner(System.in); // Se eu fecho o Scanner aqui, não consigo mais usar no main View
+
         try {
             System.out.print("Nome da atividade: ");
             String title = scanner.nextLine();
@@ -31,12 +31,12 @@ public class ActivityInsertionFormView implements View {
 
             int categoryEnum = scanner.nextInt();
 
-            activityService.save(title, startDate, endDate, categoryEnum);
-
-            scanner.close();
+            activityService.save(title, startDate, endDate, categoryEnum);            
 
         } catch (Exception e) {
             System.out.println(e);
         }
+
+        // scanner.close(); Tira aqui pra tu ver...
     }
  }

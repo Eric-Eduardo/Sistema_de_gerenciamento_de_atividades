@@ -10,10 +10,10 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
 
     @Override
     public void save(T entity){
-        System.out.println("Acessando DatabaseTable com a classe: "+entity.getClass().getName());
+        System.out.println("Acessando DatabaseTable com a classe: "+entity.getClass().getSimpleName());
         Database database = Database.getInstance();
 
-        database.getTables().values().stream().forEach(table -> System.out.println(table));
+        database.save(entity.getClass(), id);
 
           
         System.out.println("Checando existência da tabela no banco(Database) e adicionado caso nao exista.");

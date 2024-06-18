@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import database.TableDataI;
-
 public class TableDataView <T extends TableDataI> {
     private String tableTitle;
     private List<T> itemList;

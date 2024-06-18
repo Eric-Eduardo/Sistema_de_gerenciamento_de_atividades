@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class MainView implements View{
     private List<View> navigation;
-    private boolean quit = false;
 
     public MainView() {
         navigation = new ArrayList<>();
@@ -22,8 +21,10 @@ public class MainView implements View{
     @Override
     public void startView() {
         Scanner scanner = new Scanner(System.in);
+        boolean quit = false;
         
         while (!quit) {
+            
             System.out.println("\nMENU PRINCIPAL");
 
             System.out.println("[1] Criar Nova Tarefa");
@@ -46,8 +47,9 @@ public class MainView implements View{
                 System.out.println("Opção não encontrada.");
             }
         }
+        scanner.close();
         
         System.out.println("Terminei");
-        scanner.close();
+        
     }
 }
