@@ -18,13 +18,14 @@ public class ActivityService {
 
     public void save(String title, String startDate, String endDate, int categoryEnum) throws Exception{
         try {
+            System.out.println("Acessando service da classe: "+Activity.class.getName());
             Activity activity = new Activity();
 
             activity.setTitle(title);
             Date dateTeste = new Date();
             
             // TODO Trata data antes de setar na entidade a ser salva.
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy hh:mm", Locale.getDefault());
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
 
             Date dataInicial = formatter.parse(startDate);
             // activity.setStartTime(startDate);

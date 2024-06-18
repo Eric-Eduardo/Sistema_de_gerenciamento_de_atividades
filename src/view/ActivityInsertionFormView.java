@@ -33,10 +33,10 @@ public class ActivityInsertionFormView implements View {
 
             activityService.save(title, startDate, endDate, categoryEnum);
 
+            scanner.close();
+
         } catch (Exception e) {
             System.out.println(e);
         }
-        
-        scanner.close();
     }
  }

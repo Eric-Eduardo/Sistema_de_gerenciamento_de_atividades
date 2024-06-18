@@ -5,12 +5,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import database.DatabaseTable;
+import database.DatabaseTableI;
 import entity.Activity;
 
 public class ActivityDAO implements DAO<Activity>{
+
+    DatabaseTableI<Activity> databaseTableI = new DatabaseTable<Activity>();
+
     @Override
     public void save(Activity entity) {
-        // TODO Metodo para lidar com a classe database
+        System.out.println("Acessando DAO da classe: "+entity.getClass().getName());
+
+        databaseTableI.save(entity);
     }
 
     @Override
