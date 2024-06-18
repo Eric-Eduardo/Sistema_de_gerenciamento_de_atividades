@@ -23,15 +23,18 @@ public class Database {
     public Map<Class<? extends Entity>, DatabaseTableI<? extends Entity>> getTables() { return tables; }
 
 
-    public <T extends Entity> void save(Class<T> clazz, int id){
-        if(!tables.containsKey(clazz)){
-            tables.put(clazz, new DatabaseTable<T>());
+    public <T extends Entity> void save(T entity){
+        if(!tables.containsKey(entity.getClass())){
+            tables.put(entity.getClass(), new DatabaseTable<T>());
         }
+        tables.get(entity.getClass()).save(entity);
+        
     }
 
     public <T extends Entity> void delete(Class<T> clazz, int id){
         if(!tables.containsKey(clazz)){
             tables.put(clazz, new DatabaseTable<T>());
         }
+        tables.get(clazz).delete(id);
     }
 }
