@@ -1,16 +1,14 @@
 package entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class Activity extends Entity {
     private String title;
-    private Date startTime;
-    private Date endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private List<CategoryEnum> categories;
 
     
@@ -19,19 +17,10 @@ public class Activity extends Entity {
         categories = new ArrayList<>();
     }
 
-    public Activity(String title, Date startTime, Date endTime) {
+    public Activity(String title, LocalDateTime startTime, LocalDateTime endTime) {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
-    }
-
-    
-    public Map<String, String> conversionTableColumns() {
-        Map<String, String> mapa = new LinkedHashMap<>();
-        mapa.put("Título", title);
-        mapa.put("Data inicial", startTime.toString());
-        mapa.put("Data final", endTime.toString());
-        return mapa;
     }
 
     public void addCategory(CategoryEnum category) {
@@ -44,16 +33,16 @@ public class Activity extends Entity {
     public void setTitle(String title) {
         this.title = title;
     }
-    public Date getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
-    public Date getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
     public List<CategoryEnum> getCategories() {
