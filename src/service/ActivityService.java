@@ -1,6 +1,7 @@
 package service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Locale;
 
@@ -25,12 +26,12 @@ public class ActivityService {
             Activity activity = new Activity();
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
             
-            Date dataInicial = formatter.parse(startDate);
-            Date dataFinal = formatter.parse(endDate);
+            // LocalDate dataInicial = formatter.parse(startDate);
+            // LocalDate dataFinal = formatter.parse(endDate);
             
             activity.setTitle(title);
-            activity.setStartTime(dataInicial);
-            activity.setEndTime(dataFinal);
+            // activity.setStartTime(dataInicial);
+            // activity.setEndTime(dataFinal);
 
             //TODO Validações man
 

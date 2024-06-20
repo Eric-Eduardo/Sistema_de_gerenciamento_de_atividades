@@ -3,6 +3,7 @@ package database;
 import java.util.HashMap;
 import java.util.Map;
 
+import entity.Activity;
 import entity.Entity;
 
 public class Database {
@@ -27,7 +28,14 @@ public class Database {
         if(!tables.containsKey(entity.getClass())){
             tables.put(entity.getClass(), new DatabaseTable<T>());
         }
-        tables.get(entity.getClass()).save(entity);
+        if(entity instanceof Activity){
+            Activity activity = (Activity) entity;
+            
+            System.out.println(activity.getTitle());
+
+            DatabaseTableI<? extends Activity> tabela = new HashMap<>();
+            tabela = tables.get(Activity.class);
+        }
         
     }
 
