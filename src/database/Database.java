@@ -1,10 +1,10 @@
 package database;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import entity.Activity;
 import entity.Entity;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class Database {
     // ------------------ Singleton -----------------------
@@ -24,17 +24,17 @@ public class Database {
     public Map<Class<? extends Entity>, DatabaseTableI<? extends Entity>> getTables() { return tables; }
 
 
-    public <T extends Entity> void save(T entity){
-        if(!tables.containsKey(entity.getClass())){
-            tables.put(entity.getClass(), new DatabaseTable<T>());
+    
+    // @SuppressWarnings("unchecked")
+    public <T extends Entity> void save(Class<T> clazz, T entity){
+        if(!tables.containsKey(clazz)){
+            tables.put(clazz, new DatabaseTable<T>());
         }
-        if(entity instanceof Activity){
-            Activity activity = (Activity) entity;
-            
-            System.out.println(activity.getTitle());
 
-            DatabaseTableI<? extends Activity> tabela = new HashMap<>();
-            tabela = tables.get(Activity.class);
+        if(entity instanceof Activity){
+
+            ((DatabaseTable<T>)tables.get(clazz)).save(entity);
+
         }
         
     }
@@ -44,5 +44,12 @@ public class Database {
             tables.put(clazz, new DatabaseTable<T>());
         }
         tables.get(clazz).delete(id);
+    }
+
+    public <T extends Entity> Optional<T> findById(Class<T> clazz, int id) {
+        Optional<T> option = ((DatabaseTable<T>)tables.get(clazz)).findById(id);
+        // Optional<Activity> option = table.
+
+        return option;
     }
 }

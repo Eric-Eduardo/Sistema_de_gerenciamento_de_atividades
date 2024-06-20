@@ -1,30 +1,18 @@
 package entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class Activity extends Entity {
     private String title;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private List<CategoryEnum> categories;
+    private CategoryEnum category;
 
-    
-
-    public Activity() {
-        categories = new ArrayList<>();
-    }
-
-    public Activity(String title, LocalDateTime startTime, LocalDateTime endTime) {
+    public Activity(String title, LocalDateTime startTime, LocalDateTime endTime, CategoryEnum category) {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
-    }
-
-    public void addCategory(CategoryEnum category) {
-        categories.add(category);
+        this.category = category;
     }
 
     public String getTitle() {
@@ -45,10 +33,10 @@ public class Activity extends Entity {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
-    public List<CategoryEnum> getCategories() {
-        return categories;
+    public CategoryEnum getCategory() {
+        return this.category;
     }
-    public void setCategories(List<CategoryEnum> categories) {
-        this.categories = categories;
+    public void setCategories(CategoryEnum category) {
+        this.category = category;
     }
 }
