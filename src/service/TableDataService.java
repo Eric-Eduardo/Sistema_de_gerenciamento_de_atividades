@@ -1,17 +1,20 @@
 package service;
 
 import entity.Activity;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class TableDataService {
 
     private List<Activity> itemList;
-    private String[] columnTitles = {"Título", "Data inicial", "Data final"};
-    private int columnWidths[] = {13, 13, 13};
-    private SimpleDateFormat dateFormatter= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private String[] columnTitles = {"Título", "Data inicial", "Data final", "Categoria"};
+    private int columnWidths[] = {13, 13, 13, 13};
+    // private SimpleDateFormat dateFormatter= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", new Locale("pt", "BR"));
+
 
     public TableDataService() {
         itemList = new ArrayList<>();
@@ -45,8 +48,9 @@ public class TableDataService {
         List<String> lines = new ArrayList<>();
 
         lines.add(getCell(columnWidths[0], " ", item.getTitle()));
-        lines.add(getCell(columnWidths[1], " ", dateFormatter.format(item.getStartTime())));
-        lines.add(getCell(columnWidths[2], " ", dateFormatter.format(item.getEndTime())));
+        lines.add(getCell(columnWidths[1], " ", item.getStartTime().format(dateFormatter)));
+        lines.add(getCell(columnWidths[2], " ", item.getEndTime().format(dateFormatter)));
+        lines.add(getCell(columnWidths[3], " ", item.getCategory().name()));
 
         String line = lines.stream()
                 .collect(Collectors.joining(delimiter, preffix, suffix));
@@ -92,6 +96,10 @@ public class TableDataService {
 
         if (activity.getEndTime().toString().length() > columnWidths[2]) {
             columnWidths[2] = activity.getEndTime().toString().length();
+        }
+
+        if (activity.getCategory().name().length() > columnWidths[3]) {
+            columnWidths[2] = activity.getCategory().name().length();
         }
     }
 

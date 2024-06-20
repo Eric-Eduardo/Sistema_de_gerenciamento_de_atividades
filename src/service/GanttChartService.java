@@ -125,36 +125,4 @@ public class GanttChartService {
             }
         }
     }
-
-    /*
-    public String getLine(String delimiter, String preffix, String suffix, String[] items) {
-        List<String> lines = new ArrayList<>();
-
-        // for (int i = 0; i < columnTitles.length; i++) {
-        //     lines.add(getCell(columnWidths[i], " ", items[i]));
-        // }
-
-        String line = lines.stream()
-                .collect(Collectors.joining(delimiter, preffix, suffix));
-
-        return line;
-    }
-
-    public String getLine(String delimiter, String preffix, String suffix, Activity item) {
-        List<String> lines = new ArrayList<>();
-
-        lines.add(getCell(columnWidths[0], " ", item.getTitle()));
-        lines.add(getCell(columnWidths[1], " ", dateFormatter.format(item.getStartTime())));
-        lines.add(getCell(columnWidths[2], " ", dateFormatter.format(item.getEndTime())));
-
-        String line = lines.stream()
-                .collect(Collectors.joining(delimiter, preffix, suffix));
-
-        return line;
-    }
-
-
-    */
-
-
 }

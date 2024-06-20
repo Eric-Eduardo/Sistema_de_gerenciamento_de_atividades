@@ -2,32 +2,24 @@ package view;
 
 // import service.ActivityService;
 import entity.Activity;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import service.ActivityService;
 import service.GanttChartService;
 import service.TableDataService;
 
 public class ActivitySearchView implements View {
 
-    // private ActivityService activityService = new ActivityService();
+    private ActivityService activityService = new ActivityService();
+
     @Override
     public void startView() {
         boolean quit = false;
         Scanner scanner = new Scanner(System.in);
         int option;
 
-        List<Activity> activities = new ArrayList<>();
-
-        activities.add(new Activity("Atividade 1", LocalDateTime.of(2024, 06, 12, 15, 0), LocalDateTime.of(2024, 06, 12, 16, 0)));
-        activities.add(new Activity("Atividade Matemática", LocalDateTime.of(2024, 06, 12, 16, 30), LocalDateTime.of(2024, 06, 12, 17, 30)));
-        activities.add(new Activity("Atividade de Biologia Molecular", LocalDateTime.of(2024, 06, 12, 18, 50), LocalDateTime.of(2024, 06, 12, 19, 25)));
-        activities.add(new Activity("Atividade Fundamentos Matemáticas da Computação", LocalDateTime.of(2024, 06, 12, 20, 10), LocalDateTime.of(2024, 06, 12, 20, 50)));
-        activities.add(new Activity("Atividade 3", LocalDateTime.of(2024, 06, 12, 18, 40), LocalDateTime.of(2024, 06, 12, 19, 15)));
-        activities.add(new Activity("Atividade 4", LocalDateTime.of(2024, 06, 13, 15, 0), LocalDateTime.of(2024, 06, 13, 16, 0)));
-        // List<Activity> activities = activityService.findAll();
+        List<Activity> activities;
 
         while (!quit) {
 
@@ -39,23 +31,42 @@ public class ActivitySearchView implements View {
                     quit = true;
                 } else if (option == 1) {
                     // List<Activity> activities = new ArrayList<>();
+                    activities = activityService.getAll();
                     TableDataService table = new TableDataService();
                     table.addData(activities);
                     table.startView();
 
                 } else if (option == 2) {
-                    System.out.println("Informe o dia: ");
+                    System.out.println("Informe a data: ");
                     Scanner scanner2 = new Scanner(System.in);
-                    String day = scanner2.nextLine();
-                    System.out.println(day);
-                    // Activity activity = ActivityService.getDay(dia);
-                    List<Activity> activitiesOfTheDay = new ArrayList<>();
-                    activitiesOfTheDay.add(activities.get(0));
-                    activitiesOfTheDay.add(activities.get(1));
-                    activitiesOfTheDay.add(activities.get(2));
-                    activitiesOfTheDay.add(activities.get(3));
-                    GanttChartService gantChart = new GanttChartService(activitiesOfTheDay);
-                    gantChart.startView();
+                    String date = scanner2.nextLine();
+
+                    activities = activityService.findByDay(date);
+
+                    if (activities != null) {
+
+                        System.out.println("[1] Visualizar diagrama de Gantt\n[2] Visualizar mês");
+                        String visualizationOption = scanner2.nextLine();
+                        // List<Activity> activities = new ArrayList<>();
+                        // activitiesOfTheDay.add(activities.get(0));
+                        // activitiesOfTheDay.add(activities.get(1));
+                        // activitiesOfTheDay.add(activities.get(2));
+                        // activitiesOfTheDay.add(activities.get(3));
+
+                        switch (visualizationOption) {
+                            case "1":
+                                GanttChartService gantChart = new GanttChartService(activities);
+                                gantChart.startView();
+                                break;
+                            case "2":
+                                TableDataService table = new TableDataService();
+                                table.addData(activities);
+                                table.startView();
+                                break;
+                        }
+                    } else {
+                        System.out.println("Não foram encontradas atividades nesta data!");
+                    }
 
                 } else {
                     System.out.println("Opção inesistente");

@@ -1,11 +1,14 @@
 package view;
 
 // import service.ActivityService;
+import entity.Activity;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import service.ActivityService;
 
 public class EditActivityView implements View {
-    // private ActivityService activityService = new ActivityService();
+    private ActivityService activityService = new ActivityService();
 
     @Override
     public void startView() {
@@ -15,6 +18,7 @@ public class EditActivityView implements View {
 
         boolean quit = false;
         int idEntity = -1;
+        Activity activity = null;
 
         while (!quit) {
 
@@ -28,16 +32,17 @@ public class EditActivityView implements View {
                     continue;
                 }
 
-                // idEntity = activityService.getIdByName(activityName);
+                // Não será permitido nomes repetidos.
+                List<Activity> activities = activityService.findByName(activityName);
+                if (activities.isEmpty()) {
+                    System.out.println("Atividade não encontrada!");
+                } else {
+                    idEntity = activities.get(0).getId();
+                    quit = true;
+                } 
 
-                quit = true;
-
-            // } catch (EntityNotFoundExceptioin e) {
-            //     System.out.println("Atividade não encontrada");
-            // } catch (DatabaseException e) {
-            //     System.out.println("Ocorreu algum erro no banco de dados!");
             } catch (Exception e) {
-                System.out.println("Erro");
+                System.out.println("Erro: " + e);
             }
         }
 
@@ -64,7 +69,7 @@ public class EditActivityView implements View {
                             break;
                         case 1:
                             text = value.nextLine();
-                            // activityService.updateTitle(idEntity, text);
+                            activityService.updateTitle(idEntity, text);
                             break;
                         case 2:
                             text = value.nextLine();
