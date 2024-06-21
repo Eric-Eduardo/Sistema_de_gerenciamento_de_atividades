@@ -33,7 +33,7 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
     @Override
     public Optional<T> findById(int id) {
         List<T> values = new ArrayList<>(items.values());
-        Stream<T> streamValues = values.stream();
+        Stream<T> streamValues = values.stream().filter(t -> t.getId() == id);
         Optional<T> first = streamValues.findFirst();
         return first;
     }

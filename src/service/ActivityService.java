@@ -6,8 +6,11 @@ import entity.CategoryEnum;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ActivityService {
 
@@ -35,9 +38,15 @@ public class ActivityService {
     }
 
     public List<Activity> findByName(String title) {
-        Predicate<Activity> filter = (Activity activity) -> activity.getTitle().equals(title);
 
-        List<Activity> activities = activityDAO.findAll(filter);
+        Predicate<Activity> filter = (Activity activity) -> activity.getTitle().equalsIgnoreCase(title);
+
+        List<Activity> activities = activityDAO.findAll().stream().filter(filter).collect(Collectors.toList());
+
+        // Supplier<Activity> listActiviesSupplier = (Supplier<Activity>) activities;
+
+        // System.out.println(listActiviesSupplier);
+        activities.forEach( arg0 ->  System.out.println(arg0.getTitle()));
 
         return activities;
         
@@ -80,8 +89,21 @@ public class ActivityService {
     }
 
     public void updateTitle(int id, String newTitle) {
-        System.out.println("ActivityService" + id + newTitle);
-        Activity activity = activityDAO.findById(id).get();
-        System.out.println(activity);
+        TableDataService table = new TableDataService();
+        List<Activity> listaActivities = new ArrayList<>();
+        Optional<Activity> activity = activityDAO.findById(id);
+
+        if(!activity.isPresent()){
+            System.out.println("Atividade não encontrada! ");
+        }else{
+            activity.get().setTitle(newTitle);
+            listaActivities.add(activity.get());
+
+            System.out.println("Atividade atualizada com sucesso!\n ");
+
+            table.addData(listaActivities);
+            table.startView();
+        }
+        
     }
 }

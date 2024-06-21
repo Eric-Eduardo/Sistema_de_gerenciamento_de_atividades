@@ -1,6 +1,5 @@
 package database;
 
-import entity.Activity;
 import entity.Entity;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,12 +29,8 @@ public class Database {
             tables.put(clazz, new DatabaseTable<T>());
         }
 
-        if(entity instanceof Activity){
+        ((DatabaseTable<T>) tables.get(clazz)).save(entity);
 
-            ((DatabaseTable<T>)tables.get(clazz)).save(entity);
-
-        }
-        
     }
 
     public <T extends Entity> void delete(Class<T> clazz, int id){

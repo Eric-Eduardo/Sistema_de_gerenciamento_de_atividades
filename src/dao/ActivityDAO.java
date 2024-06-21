@@ -20,10 +20,9 @@ public class ActivityDAO implements DAO<Activity>{
 
     @Override
     public Optional<Activity> findById(int id) {
-        DatabaseTable<Activity> table = (DatabaseTable) database.getTables().get(Activity.class);
-        Optional<Activity> option = database.findById(Activity.class, id);
+        Optional<Activity> activityOptional = database.findById(Activity.class, id);
 
-        return Optional.empty();
+        return activityOptional;
     }
 
     @Override
