@@ -15,15 +15,12 @@ public class ActivityDAO implements DAO<Activity>{
 
     @Override
     public void save(Activity entity) {
-        // System.out.println("Acessando DAO da classe: "+entity.getClass().getName());
-
         database.save(Activity.class, entity);
     }
 
     @Override
     public Optional<Activity> findById(int id) {
         DatabaseTable<Activity> table = (DatabaseTable) database.getTables().get(Activity.class);
-        // Optional<Activity> option = table.
         Optional<Activity> option = database.findById(Activity.class, id);
 
         return Optional.empty();
@@ -33,10 +30,6 @@ public class ActivityDAO implements DAO<Activity>{
     public List<Activity> findAll() {            
         DatabaseTable<Activity> table = (DatabaseTable) database.getTables().get(Activity.class);
         return table.findAll();
-        // DatabaseTable dt = database.getTables().get(Activity.class);
-
-        // return activities;
-        // return null;
     }
 
     @Override
@@ -70,5 +63,4 @@ public class ActivityDAO implements DAO<Activity>{
     public void delete(int id) {
         database.delete(Activity.class, id);
     }
-    
 }

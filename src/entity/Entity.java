@@ -12,7 +12,6 @@ public class Entity {
         this.id = id;
     }
 
-
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
     }

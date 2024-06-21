@@ -1,6 +1,5 @@
 package view;
 
-// import service.ActivityService;
 import entity.Activity;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -30,7 +29,6 @@ public class ActivitySearchView implements View {
                 if (option == 0) {
                     quit = true;
                 } else if (option == 1) {
-                    // List<Activity> activities = new ArrayList<>();
                     activities = activityService.getAll();
                     TableDataService table = new TableDataService();
                     table.addData(activities);
@@ -44,14 +42,8 @@ public class ActivitySearchView implements View {
                     activities = activityService.findByDay(date);
 
                     if (activities != null) {
-
                         System.out.println("[1] Visualizar diagrama de Gantt\n[2] Visualizar mês");
                         String visualizationOption = scanner2.nextLine();
-                        // List<Activity> activities = new ArrayList<>();
-                        // activitiesOfTheDay.add(activities.get(0));
-                        // activitiesOfTheDay.add(activities.get(1));
-                        // activitiesOfTheDay.add(activities.get(2));
-                        // activitiesOfTheDay.add(activities.get(3));
 
                         switch (visualizationOption) {
                             case "1":
@@ -76,6 +68,5 @@ public class ActivitySearchView implements View {
                 System.out.println("\rEntrada incorreta");
             }
         }
-        // scanner.close();
     }
 }

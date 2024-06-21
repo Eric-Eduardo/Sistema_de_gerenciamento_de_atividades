@@ -1,6 +1,5 @@
 package view;
 
-// import service.ActivityService;
 import entity.Activity;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -32,7 +31,6 @@ public class EditActivityView implements View {
                     continue;
                 }
 
-                // Não será permitido nomes repetidos.
                 List<Activity> activities = activityService.findByName(activityName);
                 if (activities.isEmpty()) {
                     System.out.println("Atividade não encontrada!");
@@ -50,7 +48,6 @@ public class EditActivityView implements View {
         Scanner value = new Scanner(System.in);
         if (idEntity > -1) {
             while (!quit) {
-
                 System.out.println("Selecione um atributo para editar:\n"
                         + "[1] Tìtulo\n"
                         + "[2] Data de início\n"
@@ -73,19 +70,15 @@ public class EditActivityView implements View {
                             break;
                         case 2:
                             text = value.nextLine();
-                            // activityService.updateStartDate(idEntity, text);
                             break;
                         case 3:
                             text = value.nextLine();
-                            // activityService.updateEndDate(idEntity, text);
                             break;
                         case 4:
                             text = value.nextLine();
-                            // activityService.addCategory(idEntity, text);
                             break;
                         case 5:
                             text = value.nextLine();
-                            // activityService.removeCategory(idEntity, text);
                             break;
                         default:
                             System.out.println("Opção inválida");
@@ -99,6 +92,5 @@ public class EditActivityView implements View {
             }
         }
         value.close();
-
     }
 }

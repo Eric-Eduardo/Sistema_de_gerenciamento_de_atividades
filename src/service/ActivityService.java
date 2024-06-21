@@ -46,15 +46,10 @@ public class ActivityService {
     public void save(String title, String startDate, String endDate, int categoryEnum) throws Exception {
 
         try {
-
-            // System.out.println("Acessando service da classe: "+Activity.class.getName());
-            
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
             LocalDateTime startLocalDateTime = LocalDateTime.parse(startDate, formatter);
             LocalDateTime endLocalDateTime = LocalDateTime.parse(endDate, formatter);
-
-            // System.out.println(startLocalDateTime);
 
             CategoryEnum category = CategoryEnum.values()[categoryEnum];
             Activity activity = new Activity(title, startLocalDateTime, endLocalDateTime, category);
@@ -88,8 +83,5 @@ public class ActivityService {
         System.out.println("ActivityService" + id + newTitle);
         Activity activity = activityDAO.findById(id).get();
         System.out.println(activity);
-        // activity.setTitle(newTitle);
-        // activityDAO.update(id, activity);
     }
-    
 }

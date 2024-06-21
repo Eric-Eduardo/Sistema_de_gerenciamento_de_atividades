@@ -1,6 +1,5 @@
 package view;
 
-// import service.ActivityService;
 import entity.Activity;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -55,11 +54,6 @@ public class RemoveActivityView implements View {
                 }
 
                 quit = true;
-
-            // } catch (EntityNotFoundExceptioin e) {
-            //     System.out.println("Atividade não encontrada");
-            // } catch (DatabaseException e) {
-            //     System.out.println("Ocorreu algum erro no banco de dados!");
             } catch (Exception e) {
                 System.out.println("Erro");
             }

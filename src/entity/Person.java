@@ -10,7 +10,6 @@ public class Person extends User {
     public String getCpf() {
         return cpf;
     }
-
     
     public void setNome(String nome) {
         this.nome = nome;
@@ -18,6 +17,4 @@ public class Person extends User {
     public String getNome() {
         return nome;
     }
-
-
 }

@@ -5,13 +5,11 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class MainView implements View{
     private List<View> navigation;
 
     public MainView() {
         navigation = new ArrayList<>();
-
         navigation.add(new ActivityInsertionFormView());
         navigation.add(new ActivitySearchView());
         navigation.add(new EditActivityView());
@@ -24,15 +22,13 @@ public class MainView implements View{
         boolean quit = false;
         
         while (!quit) {
-            
             System.out.println("\nMENU PRINCIPAL");
-
             System.out.println("[1] Criar Nova Tarefa");
             System.out.println("[2] Buscar tarefa");
             System.out.println("[3] Editar tarefa");
             System.out.println("[4] Remover tarefa");
             System.out.println("[0] Sair");
-
+            
             try {
                 int option = scanner.nextInt();
                 
@@ -48,8 +44,5 @@ public class MainView implements View{
             }
         }
         scanner.close();
-        
-        System.out.println("Terminei");
-        
     }
 }

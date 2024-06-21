@@ -12,7 +12,6 @@ public class TableDataService {
     private List<Activity> itemList;
     private String[] columnTitles = {"Título", "Data inicial", "Data final", "Categoria"};
     private int columnWidths[] = {13, 13, 13, 13};
-    // private SimpleDateFormat dateFormatter= new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", new Locale("pt", "BR"));
 
 

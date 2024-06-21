@@ -12,14 +12,9 @@ import java.util.stream.Collectors;
 public class CalendarService {
     private List<Activity> activities;
     private LocalDate dayMonth;
-    // private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-
 
     public CalendarService(int month, int year) {
         this.dayMonth = LocalDate.of(year, month, 1);
-        // Predicate<Activity> filter = (Activity activity) -> activity.getStartTime().getMonthValue() == month;
-        // this.activities = ActivityService.getAll(filter)
     }
 
     public CalendarService(String date_) {
@@ -28,13 +23,6 @@ public class CalendarService {
         LocalDate date = LocalDate.parse(date_, formatter);
         this.dayMonth = LocalDate.of(date.getYear(), date.getMonthValue(), 1);
         this.activities = new ArrayList<>();
-
-        // activities.add(new Activity("Atividade 1", LocalDateTime.of(2024, 06, 12, 15, 0), LocalDateTime.of(2024, 06, 12, 16, 0)));
-        // activities.add(new Activity("Atividade Matemática", LocalDateTime.of(2024, 06, 12, 16, 30), LocalDateTime.of(2024, 06, 12, 17, 30)));
-        // activities.add(new Activity("Atividade de Biologia Molecular", LocalDateTime.of(2024, 06, 12, 18, 50), LocalDateTime.of(2024, 06, 12, 19, 25)));
-        // activities.add(new Activity("Atividade Fundamentos Matemáticas da Computação", LocalDateTime.of(2024, 06, 12, 20, 10), LocalDateTime.of(2024, 06, 12, 20, 50)));
-        // activities.add(new Activity("Atividade 3", LocalDateTime.of(2024, 06, 12, 18, 40), LocalDateTime.of(2024, 06, 12, 19, 15)));
-        // activities.add(new Activity("Atividade 4", LocalDateTime.of(2024, 06, 13, 15, 0), LocalDateTime.of(2024, 06, 13, 16, 0)));
     }
 
     public void startView() {

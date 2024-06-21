@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Database {
-    // ------------------ Singleton -----------------------
+
+    // ------------------ Singleton -------------------- //
+
     private static Database instance;
     private Database(){}
 
@@ -17,15 +19,12 @@ public class Database {
         }
         return instance;
     }
-    // ------------------ Singleton -----------------------
+
+    // ------------------ Singleton -------------------- //
 
     private Map<Class<? extends Entity>, DatabaseTableI<? extends Entity>> tables = new HashMap<>();
-
     public Map<Class<? extends Entity>, DatabaseTableI<? extends Entity>> getTables() { return tables; }
-
-
     
-    // @SuppressWarnings("unchecked")
     public <T extends Entity> void save(Class<T> clazz, T entity){
         if(!tables.containsKey(clazz)){
             tables.put(clazz, new DatabaseTable<T>());
@@ -48,7 +47,6 @@ public class Database {
 
     public <T extends Entity> Optional<T> findById(Class<T> clazz, int id) {
         Optional<T> option = ((DatabaseTable<T>)tables.get(clazz)).findById(id);
-        // Optional<Activity> option = table.
 
         return option;
     }
