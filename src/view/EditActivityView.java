@@ -1,6 +1,7 @@
 package view;
 
 import entity.Activity;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -35,7 +36,8 @@ public class EditActivityView implements View {
                 if (activities.isEmpty()) {
                     System.out.println("Atividade não encontrada!");
                 } else {
-                    idEntity = activities.get(0).getId();
+                    activity = activities.get(0);
+                    // idEntity = activity.getId();
                     quit = true;
                 } 
 
@@ -46,7 +48,9 @@ public class EditActivityView implements View {
 
         quit = false;
         Scanner value = new Scanner(System.in);
-        if (idEntity > -1) {
+        System.out.println(activity != null);
+
+        if (activity != null) {
             while (!quit) {
                 System.out.println("Selecione um atributo para editar:\n"
                         + "[1] Tìtulo\n"
@@ -65,12 +69,13 @@ public class EditActivityView implements View {
                             quit = true;
                             break;
                         case 1:
-                            System.out.println("\n Digite o novo titulo: ");
+                            System.out.println("\nDigite o novo titulo: ");
                             text = value.nextLine();
-                            activityService.updateTitle(idEntity, text);
+                            // activityService.updateTitle(activity.getId(), text);
+                            activityService.update(activity.getId(), text, activity.getStartTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")), activity.getEndTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
                             break;
                         case 2:
-                            System.out.println("\n Digite a nova data de início no formato \"dd/MM/aaaa hh:mm\" : ");
+                            System.out.println("\nDigite a nova data de início no formato \"dd/MM/aaaa hh:mm\" : ");
                             text = value.nextLine();
                             break;
                         case 3:
@@ -91,6 +96,5 @@ public class EditActivityView implements View {
                 }
             }
         }
-        value.close();
     }
 }

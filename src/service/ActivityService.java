@@ -103,7 +103,19 @@ public class ActivityService {
 
             table.addData(listaActivities);
             table.startView();
-        }
-        
+        }   
+    }
+
+    public void update(int id, String title, String startDate_, String endDate_) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDateTime startDate = LocalDateTime.parse(startDate_, formatter);
+        LocalDateTime endDate = LocalDateTime.parse(endDate_, formatter);
+
+        Activity activity = activityDAO.findById(id).get();
+        activity.setTitle(title);
+        activity.setStartTime(startDate);
+        activity.setEndTime(endDate);
+
+        activityDAO.update(id, activity);
     }
 }
