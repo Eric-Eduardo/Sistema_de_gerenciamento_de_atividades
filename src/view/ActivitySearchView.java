@@ -24,7 +24,7 @@ public class ActivitySearchView implements View {
 
         while (!quit) {
 
-            System.out.println("\nATIVIDADES\n[1] Ver tudo\n[2] Ver dia\n[0] Sair");
+            System.out.println("\nATIVIDADES\n[1] Ver tudo\n[2] Ver por Data Inicial\n[0] Sair");
             try {
                 option = scanner.nextInt();
 
@@ -73,7 +73,6 @@ public class ActivitySearchView implements View {
                         } else {
                             System.out.println("Não foram encontradas atividades nesta data!");
                         }
-                        System.out.println("Informe a data: ");
                         
                     } catch (Exception e) {
                         System.err.println("Erro durante busca por data: "+ e.getCause());
