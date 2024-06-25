@@ -1,6 +1,11 @@
 package view;
 
 import entity.Activity;
+import entity.CategoryEnum;
+import exception.EntityNotFoundException;
+import exception.InvalidDateIntervalException;
+
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -36,7 +41,7 @@ public class EditActivityView implements View {
                     System.out.println("Atividade não encontrada!");
                 } else {
                     activity = activities.get(0);
-                    // idEntity = activity.getId();
+                    idEntity = activity.getId();
                     quit = true;
                 } 
 
@@ -50,52 +55,43 @@ public class EditActivityView implements View {
 
         if (activity != null) {
             while (!quit) {
-                System.out.println("Selecione um atributo para editar:\n"
-                        + "[1] Tìtulo\n"
-                        + "[2] Data de início\n"
-                        + "[3] Data final\n"
-                        + "[4] Cateoria\n"
-                        + "[0] Sair"
-                );
-
+                System.out.println("Preencha na ordem:\n "+
+                          "Pressione Enter quando não quiser inserir alteração.\n");
+                          
                 try {
-                    int option = scanner.nextInt();
-                    String text;
-                    switch (option) {
-                        case 0:
-                            quit = true;
-                            break;
-                        case 1:
-                            System.out.println("\nDigite o novo titulo: ");
-                            text = value.nextLine();
-                            activityService.update(activity.getId(), text, null, null);
+                    int category;
+                    String title = "";
+                    String startDate_ = "";
+                    String endDate_ = "";
 
-                            // try {
-                            //     activityService.update(idEntity, "", "", "");
-                            // } catch (EntityNotFoundException | InvalidDateIntervalException e) {
-                            //     System.err.println(e.getMessage());
-                            //     // e.printStackTrace();
-                            // }
-                            break;
-                        case 2:
-                            System.out.println("\nDigite a nova data de início no formato \"dd/MM/aaaa hh:mm\": ");
-                            text = value.nextLine();
-                            activityService.update(activity.getId(), null, text, null);
-                            break;
-                        case 3:
-                            
-                            System.out.println("\nDigite a nova data final no formato \"dd/MM/aaaa hh:mm\": ");
-                            text = value.nextLine();
-                            activityService.update(activity.getId(), null, null, text);
-                            break;
-                        case 4:
-                            // text = value.nextLine();
-                            System.out.println("Funcionalidade em construção...");
-                            break;
-                        default:
-                            System.out.println("Opção inválida");
+
+                    try {
+                        System.out.println("[1] Título\n");  
+                        title = scanner.nextLine();
+
+                        System.out.println("[2] Data de início\n"); 
+                        startDate_ = scanner.nextLine();
+
+                        System.out.println("[3] Data final\n");
+                        endDate_ = scanner.nextLine();
+
+                        System.out.println("[4] Cateoria (Em número): \n");
+                        for (int i = 0; i < CategoryEnum.values().length; i++) {
+                            System.out.println("["+i+"] "+CategoryEnum.values()[i]);                 
+                        }
+
+                        category = scanner.nextInt();
+
+                        CategoryEnum categoryEnum = CategoryEnum.values()[category];
+
+
+                        activityService.update(idEntity, title, startDate_, endDate_, categoryEnum);
+                    } catch (EntityNotFoundException | InvalidDateIntervalException e) {
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
                     }
 
+                    quit = true;
                 } catch (InputMismatchException e) {
                     System.out.println("Você deve digiar um número correspondente a uma opção.");
                 } catch (Exception e) {

@@ -52,14 +52,13 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
 
     @Override
     public void update(int id, T entity) throws DatabaseException{
-        System.out.println("Realizando Update Entidade");
+        System.out.println(">>>>>>>>>>>    Atualizando:   <<<<<<<<<");
         items.put(id, entity);
-
     }
 
     @Override
     public void delete(int id) throws DatabaseException {
-        System.out.println("Deletando Entidade");
+        System.out.println(">>>>>>>>>>>        Deletando Entidade       <<<<<<<<<<<<");
 
         Optional<T> optionalEntity = findById(id);
 

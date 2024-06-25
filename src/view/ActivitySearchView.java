@@ -4,6 +4,8 @@ import entity.Activity;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
+
 import service.ActivityService;
 import service.GanttChartService;
 import service.TableDataService;
@@ -51,8 +53,23 @@ public class ActivitySearchView implements View {
                         activities = activityService.findByDay(date);
                         
                         if (activities != null) {
-                            GanttChartService gantChart = new GanttChartService(activities);
-                            gantChart.startView();
+                            System.out.println("[1] Visualizar diagrama de Gantt\n[2] Visualizar mês");
+                            String visualizationOption = scanner2.nextLine();
+    
+                            switch (visualizationOption) {
+                                case "1":
+                                    GanttChartService gantChart = new GanttChartService(activities);
+                                    gantChart.startView();
+                                    break;
+                                case "2":
+                                    Activity activity = activities.get(0);
+                                    Predicate<Activity> filterPredicate = activityFilter -> activityFilter.getStartTime().getMonth().compareTo(activity.getStartTime().getMonth()) == 0;
+                                    List<Activity> listActivities = activityService.getAll(filterPredicate);
+                                    TableDataService table = new TableDataService();
+                                    table.addData(listActivities);
+                                    table.startView();
+                                    break;
+                            }
                         } else {
                             System.out.println("Não foram encontradas atividades nesta data!");
                         }

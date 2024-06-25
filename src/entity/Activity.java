@@ -36,7 +36,7 @@ public class Activity extends Entity {
     public CategoryEnum getCategory() {
         return this.category;
     }
-    public void setCategories(CategoryEnum category) {
+    public void setCategorie(CategoryEnum category) {
         this.category = category;
     }
 }

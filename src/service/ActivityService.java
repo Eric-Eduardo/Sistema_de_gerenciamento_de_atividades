@@ -24,6 +24,22 @@ public class ActivityService {
         activityDAO = new ActivityDAO();
     }
 
+    public List<Activity> getAll(Predicate<Activity> filter) throws DAOException, NullPointerException {
+        List<Activity> activities = null;
+        try {
+            activities = activityDAO.findAll(filter);
+
+            if(activities == null){
+                throw new NullPointerException("Listagem vazia.");
+            }
+
+        } catch (DAOException e) {
+            throw new DAOException("Erro ao buscar as tarefas.", e.getCause());
+        }
+
+        return activities;
+    }
+
     public List<Activity> getAll() throws DAOException, NullPointerException {
         List<Activity> activities = null;
         try {
@@ -66,7 +82,11 @@ public class ActivityService {
         // Supplier<Activity> listActiviesSupplier = (Supplier<Activity>) activities;
 
         // System.out.println(listActiviesSupplier);
-        activities.forEach( arg0 ->  System.out.println(arg0.getTitle()));
+        //  activities.forEach( arg0 ->  System.out.println(arg0.getTitle()));
+        System.out.println();
+         TableDataService table = new TableDataService();
+                            table.addData(activities);
+                            table.startView();
 
         return activities;
         
@@ -142,40 +162,50 @@ public class ActivityService {
     //     }   
     // }
 
-    public void update(int id, String title, String startDate_, String endDate_) throws EntityNotFoundException, InvalidDateIntervalException, DateTimeParseException {
+    public void update(int id, String title, String startDate_, String endDate_, CategoryEnum categoryEnum) throws EntityNotFoundException, InvalidDateIntervalException, DateTimeParseException {
 
         try {
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            Optional<Activity> optionalActivity = activityDAO.findById(id);
+            
+            if(!optionalActivity.isPresent()){
+                throw new EntityNotFoundException("Activity não encontrado com id: "+id);
+            }
+
+            Activity activity = optionalActivity.get();
+
+            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"); 
+            
+            LocalDateTime startDate;
+            LocalDateTime endDate;
+
+            if(title != null && !title.equalsIgnoreCase("")){
+                activity.setTitle(title);
+            }
+            
+            if(startDate_ != null && !startDate_.equalsIgnoreCase("")){
+                startDate = LocalDateTime.parse(startDate_, formatter);
+                activity.setStartTime(startDate);
+            }
+            
+            if(endDate_ != null && !endDate_.equalsIgnoreCase("")){
+                endDate = LocalDateTime.parse(endDate_, formatter);
+                activity.setEndTime(endDate);
+            }
+
+
+            if(categoryEnum != null){
+                activity.setCategorie(categoryEnum);
+            }
             
 
-            Optional<Activity> optionalActivity = activityDAO.findById(id);
-            Activity activity;
-
-            if(!optionalActivity.isPresent()){
-                throw new EntityNotFoundException("Entidade não encontrada.");
-            } else {
-
-                activity = optionalActivity.get();
-                if (title != null) {
-                    activity.setTitle(title);
-
-                } else if (startDate_ != null) {
-                    LocalDateTime startDate = LocalDateTime.parse(startDate_, formatter);
-                    if(startDate.compareTo(activity.getEndTime()) > 0){
-                        throw new InvalidDateIntervalException("A data inicial não pode ser depois da data final.");
-                    }
-                    activity.setStartTime(startDate);
-                
-                } else if (endDate_ != null) {
-                    LocalDateTime endDate = LocalDateTime.parse(endDate_, formatter);
-                    if(activity.getStartTime().compareTo(endDate) > 0){
-                        throw new InvalidDateIntervalException("A data inicial não pode ser depois da data final.");
-                    }
-                    activity.setEndTime(endDate);
-                }
-                activityDAO.update(id, activity);    
+            if(activity.getStartTime().compareTo(activity.getEndTime()) > 0){
+                throw new InvalidDateIntervalException("A data inicial não pode ser depois da data final.");
             }
+
+
+
+            activityDAO.update(id, activity);    
 
         } catch (DAOException | DateTimeParseException e) {
             System.err.println("Erro ao atualizar atividade. "+ e.getCause());
