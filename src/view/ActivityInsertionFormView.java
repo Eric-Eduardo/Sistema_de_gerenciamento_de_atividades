@@ -9,7 +9,7 @@ public class ActivityInsertionFormView implements View {
     private ActivityService activityService = new ActivityService();
 
     @Override
-    public void startView() {
+    public void startView(){
         System.out.println("FORMULÁRIO DE CADASTRO DE ATIVIDADE");
         Scanner scanner = new Scanner(System.in);
 
@@ -34,7 +34,7 @@ public class ActivityInsertionFormView implements View {
             activityService.save(title, startDate, endDate, categoryEnum);
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
  }

@@ -38,7 +38,8 @@ public class MainView implements View{
                     navigation.get(option-1).startView();
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Você deve digitar um número correspondente a uma opção.");
+                System.err.println("Erro ao escolher opção");
+                throw new InputMismatchException("Você deve digitar um número correspondente a uma opção.");
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Opção não encontrada.");
             }

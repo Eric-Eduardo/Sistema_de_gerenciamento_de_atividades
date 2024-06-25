@@ -1,6 +1,9 @@
 package view;
 
 import entity.Activity;
+import exception.EntityNotFoundException;
+import exception.InvalidDateIntervalException;
+
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -48,7 +51,6 @@ public class EditActivityView implements View {
 
         quit = false;
         Scanner value = new Scanner(System.in);
-        System.out.println(activity != null);
 
         if (activity != null) {
             while (!quit) {
@@ -71,8 +73,17 @@ public class EditActivityView implements View {
                         case 1:
                             System.out.println("\nDigite o novo titulo: ");
                             text = value.nextLine();
+
+                            try {
+                                activityService.update(idEntity, "", "", "");
+                            } catch (EntityNotFoundException | InvalidDateIntervalException e) {
+                                System.err.println(e.getMessage());
+                                e.printStackTrace();
+                            }
+                            
                             // activityService.updateTitle(activity.getId(), text);
-                            activityService.update(activity.getId(), text, activity.getStartTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")), activity.getEndTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+                            // activityService.update(activity.getId(), text, activity.getStartTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
+                            //          activity.getEndTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
                             break;
                         case 2:
                             System.out.println("\nDigite a nova data de início no formato \"dd/MM/aaaa hh:mm\" : ");

@@ -31,7 +31,7 @@ public class RemoveActivityView implements View {
 
 
                 List<Activity> activities = activityService.findByName(activityName);
-                System.out.println(activities.size());
+                
                 if (activities.isEmpty()) {
                     System.out.println("Não foram encontradas atividades com o nome " + activityName);
                 } else if (activities.size() > 1) {
@@ -48,9 +48,9 @@ public class RemoveActivityView implements View {
                     Scanner scanner2 = new Scanner(System.in);
                     int ID = scanner2.nextInt();
 
-                    this.activityService.delete(ID);
+                    activityService.delete(ID);
                 } else if (activities.size() == 1) {
-                    this.activityService.delete(activities.get(0).getId());
+                    activityService.delete(activities.get(0).getId());
                 }
 
                 quit = true;

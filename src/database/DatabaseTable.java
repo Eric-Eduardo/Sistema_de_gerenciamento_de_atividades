@@ -1,6 +1,8 @@
 package database;
 
 import entity.Entity;
+import exception.DatabaseException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,19 +21,19 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
     }
 
     @Override
-    public void save(T entity) {
+    public void save(T entity) throws DatabaseException {
         try {
             entity.setId(countID);
             items.put(countID, entity);
             countID++;
             System.out.println("Atividade salva!");
         } catch (Exception e) {
-            System.out.println("Erro no salvamento: " + e);
+            throw new DatabaseException("Erro no salvamento: " + e);
         }
     }
 
     @Override
-    public Optional<T> findById(int id) {
+    public Optional<T> findById(int id) throws DatabaseException {
         List<T> values = new ArrayList<>(items.values());
         Stream<T> streamValues = values.stream().filter(t -> t.getId() == id);
         Optional<T> first = streamValues.findFirst();
@@ -39,7 +41,7 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
     }
 
     @Override
-    public List<T> findAll() {
+    public List<T> findAll() throws DatabaseException{
         if (this.items != null) {
             List<T> values = new ArrayList<>(items.values());
             return values;
@@ -49,29 +51,25 @@ public class DatabaseTable<T extends Entity> implements DatabaseTableI<T> {
     }
 
     @Override
-    public void update(int id, T entity) {
+    public void update(int id, T entity) throws DatabaseException{
         System.out.println("Realizando Update Entidade");
         items.put(id, entity);
 
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws DatabaseException {
         System.out.println("Deletando Entidade");
-        boolean found = false;
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId() == id) {
-                items.remove(i);
-                i = items.size();
-                found = true;
-                continue;
-            }
+
+        Optional<T> optionalEntity = findById(id);
+
+        if (!optionalEntity.isPresent()) {
+            throw new DatabaseException("Entidade não encontrada.");
         }
 
-        if (!found) {
-            System.out.println("Elemento não encontrado");
-        } else {
-            System.out.println("Elemento removido");
-        }
+        Entity entity = optionalEntity.get();
+
+        items.remove(entity.getId(), entity);
+
     }
 }

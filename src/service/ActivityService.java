@@ -3,10 +3,14 @@ package service;
 import dao.ActivityDAO;
 import entity.Activity;
 import entity.CategoryEnum;
+import exception.DAOException;
+import exception.EntityNotFoundException;
+import exception.InvalidDateIntervalException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -21,23 +25,40 @@ public class ActivityService {
         activityDAO = new ActivityDAO();
     }
 
-    public List<Activity> getAll() {
-        List<Activity> activities = activityDAO.findAll();
+    public List<Activity> getAll() throws DAOException, NullPointerException {
+        List<Activity> activities = null;
+        try {
+            activities = activityDAO.findAll();
+
+            if(activities == null){
+                throw new NullPointerException("Listagem vazia.");
+            }
+
+        } catch (DAOException e) {
+            throw new DAOException("Erro ao buscar todas as tarefas.", e.getCause());
+        }
 
         return activities;
     }
 
-    public List<Activity> findByDay(String date) {
-        LocalDate localDate = LocalDate.parse(date, dateFormatter);
+    public List<Activity> findByDay(String date) throws DAOException{
+        List<Activity> activities = null;
 
-        Predicate<Activity> filter = (Activity activity) -> activity.getStartTime().toLocalDate().equals(localDate);
+        try {
+            LocalDate localDate = LocalDate.parse(date, dateFormatter);
 
-        List<Activity> activities = activityDAO.findAll(filter);
+            Predicate<Activity> filter = (Activity activity) -> activity.getStartTime().toLocalDate().equals(localDate);
+    
+             activities = activityDAO.findAll(filter);    
+        } catch (DAOException e) {
+            throw e;
+        }
+        
 
         return activities;
     }
 
-    public List<Activity> findByName(String title) {
+    public List<Activity> findByName(String title) throws DAOException {
 
         Predicate<Activity> filter = (Activity activity) -> activity.getTitle().equalsIgnoreCase(title);
 
@@ -52,7 +73,7 @@ public class ActivityService {
         
     }
 
-    public void save(String title, String startDate, String endDate, int categoryEnum) throws Exception {
+    public void save(String title, String startDate, String endDate, int categoryEnum) throws InvalidDateIntervalException {
 
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -60,25 +81,39 @@ public class ActivityService {
             LocalDateTime startLocalDateTime = LocalDateTime.parse(startDate, formatter);
             LocalDateTime endLocalDateTime = LocalDateTime.parse(endDate, formatter);
 
+            if (startLocalDateTime.compareTo(endLocalDateTime) > 0) {
+                throw new InvalidDateIntervalException("A data Inicial não pode ser depois que a data fim.");
+            }
+
             CategoryEnum category = CategoryEnum.values()[categoryEnum];
             Activity activity = new Activity(title, startLocalDateTime, endLocalDateTime, category);
             
             activityDAO.save(activity);
 
-        } catch (Exception exception) {
-            throw exception;
+        } catch (DAOException exception) {
+
+            System.err.println("Erro ao salvar tarefa. "+exception.getMessage());
+            exception.printStackTrace();
         }
     }
 
-    public List<Activity> delete(String title) {
-        return activityDAO.findAll((Activity activity) -> activity.getTitle().equals(title));
+    // public List<Activity> delete(String title) {
+    //     return activityDAO.findAll((Activity activity) -> activity.getTitle().equals(title));
+    // }
+
+    public void delete(int id) throws EntityNotFoundException{
+        try {
+            activityDAO.delete(id);    
+        } catch (DAOException e) {
+
+            System.err.println("Erro ao deletar atividade");
+            throw new EntityNotFoundException("Entidade não encontrada. ", e.getCause());
+        }
+        
     }
 
-    public void delete(int id) {
-        activityDAO.delete(id);
-    }
+    public int getIdByName(String title) throws DAOException {
 
-    public int getIdByName(String title) {
         
         List<Activity> activities = activityDAO.findAll((Activity activity) -> activity.getTitle().equals(title));
         if (activities.isEmpty()) {
@@ -88,34 +123,54 @@ public class ActivityService {
         return activities.get(0).getId();
     }
 
-    public void updateTitle(int id, String newTitle) {
-        TableDataService table = new TableDataService();
-        List<Activity> listaActivities = new ArrayList<>();
-        Optional<Activity> activity = activityDAO.findById(id);
+    // public void updateTitle(int id, String newTitle) {
+    //     TableDataService table = new TableDataService();
+    //     List<Activity> listaActivities = new ArrayList<>();
+    //     Optional<Activity> activity = activityDAO.findById(id);
 
-        if(!activity.isPresent()){
-            System.out.println("Atividade não encontrada! ");
-        }else{
-            activity.get().setTitle(newTitle);
-            listaActivities.add(activity.get());
+    //     if(!activity.isPresent()){
+    //         System.out.println("Atividade não encontrada! ");
+    //     }else{
+    //         activity.get().setTitle(newTitle);
+    //         listaActivities.add(activity.get());
 
-            System.out.println("Atividade atualizada com sucesso!\n ");
+    //         System.out.println("Atividade atualizada com sucesso!\n ");
 
-            table.addData(listaActivities);
-            table.startView();
-        }   
-    }
+    //         table.addData(listaActivities);
+    //         table.startView();
+    //     }   
+    // }
 
-    public void update(int id, String title, String startDate_, String endDate_) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        LocalDateTime startDate = LocalDateTime.parse(startDate_, formatter);
-        LocalDateTime endDate = LocalDateTime.parse(endDate_, formatter);
+    public void update(int id, String title, String startDate_, String endDate_) throws EntityNotFoundException, InvalidDateIntervalException, DateTimeParseException {
 
-        Activity activity = activityDAO.findById(id).get();
-        activity.setTitle(title);
-        activity.setStartTime(startDate);
-        activity.setEndTime(endDate);
+        try {
 
-        activityDAO.update(id, activity);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            LocalDateTime startDate = LocalDateTime.parse(startDate_, formatter);
+            LocalDateTime endDate = LocalDateTime.parse(endDate_, formatter);
+
+            Optional<Activity> optionalActivity = activityDAO.findById(id);
+            if(!optionalActivity.isPresent()){
+                throw new EntityNotFoundException("Entidade não encontrada.");
+            }
+
+
+            if(startDate.compareTo(endDate) > 0){
+                throw new InvalidDateIntervalException("A data inicial não pode ser depois da data final.");
+            }
+
+            Activity activity = optionalActivity.get();
+
+            activity.setTitle(title);
+            activity.setStartTime(startDate);
+            activity.setEndTime(endDate);
+
+            activityDAO.update(id, activity);    
+
+        } catch (DAOException | DateTimeParseException e) {
+            System.err.println("Erro ao atualizar atividade. "+ e.getCause());
+        }
+
+        
     }
 }
