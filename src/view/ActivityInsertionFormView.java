@@ -1,8 +1,7 @@
  package view;
 
-import java.util.Scanner;
-
 import entity.CategoryEnum;
+import java.util.Scanner;
 import service.ActivityService;
 
 public class ActivityInsertionFormView implements View {
@@ -34,7 +33,7 @@ public class ActivityInsertionFormView implements View {
             activityService.save(title, startDate, endDate, categoryEnum);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Erro no cadastro da atividade: " + e);
         }
     }
  }

@@ -1,10 +1,6 @@
 package view;
 
 import entity.Activity;
-import exception.EntityNotFoundException;
-import exception.InvalidDateIntervalException;
-
-import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -58,8 +54,7 @@ public class EditActivityView implements View {
                         + "[1] Tìtulo\n"
                         + "[2] Data de início\n"
                         + "[3] Data final\n"
-                        + "[4] Inserir categoria\n"
-                        + "[5] Cateoria\n"
+                        + "[4] Cateoria\n"
                         + "[0] Sair"
                 );
 
@@ -73,30 +68,29 @@ public class EditActivityView implements View {
                         case 1:
                             System.out.println("\nDigite o novo titulo: ");
                             text = value.nextLine();
+                            activityService.update(activity.getId(), text, null, null);
 
-                            try {
-                                activityService.update(idEntity, "", "", "");
-                            } catch (EntityNotFoundException | InvalidDateIntervalException e) {
-                                System.err.println(e.getMessage());
-                                e.printStackTrace();
-                            }
-                            
-                            // activityService.updateTitle(activity.getId(), text);
-                            // activityService.update(activity.getId(), text, activity.getStartTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
-                            //          activity.getEndTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+                            // try {
+                            //     activityService.update(idEntity, "", "", "");
+                            // } catch (EntityNotFoundException | InvalidDateIntervalException e) {
+                            //     System.err.println(e.getMessage());
+                            //     // e.printStackTrace();
+                            // }
                             break;
                         case 2:
-                            System.out.println("\nDigite a nova data de início no formato \"dd/MM/aaaa hh:mm\" : ");
+                            System.out.println("\nDigite a nova data de início no formato \"dd/MM/aaaa hh:mm\": ");
                             text = value.nextLine();
+                            activityService.update(activity.getId(), null, text, null);
                             break;
                         case 3:
+                            
+                            System.out.println("\nDigite a nova data final no formato \"dd/MM/aaaa hh:mm\": ");
                             text = value.nextLine();
+                            activityService.update(activity.getId(), null, null, text);
                             break;
                         case 4:
-                            text = value.nextLine();
-                            break;
-                        case 5:
-                            text = value.nextLine();
+                            // text = value.nextLine();
+                            System.out.println("Funcionalidade em construção...");
                             break;
                         default:
                             System.out.println("Opção inválida");
@@ -104,6 +98,8 @@ public class EditActivityView implements View {
 
                 } catch (InputMismatchException e) {
                     System.out.println("Você deve digiar um número correspondente a uma opção.");
+                } catch (Exception e) {
+                    System.out.println("Erro na atualização do objeto");
                 }
             }
         }
